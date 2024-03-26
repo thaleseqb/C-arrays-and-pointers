@@ -2,10 +2,11 @@
 #include <string.h>
 
 #define ATT_NUM 20
+#define PICKED_SW "MELANCIA"
 
 // global variables
 char secret_word[ATT_NUM];
-char kicks[26];
+char kicks[ATT_NUM];
 int attempts = 0;
 
 void opening() {
@@ -52,13 +53,39 @@ void draw_hang_design() {
 }
 
 void select_word() {
-    sprintf(secret_word, "MELANCIA");
+    sprintf(secret_word, PICKED_SW);
+}
+
+int won() {
+    for (int idx=0; idx < strlen(secret_word); idx++) {
+        if (!return_found(secret_word[idx])) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+int get_hanged() {
+    int errors = 0;
+
+    for (int idx = 0; idx < attempts; idx++) {
+        int exists = 0;
+
+        for (int j = 0; j < strlen(secret_word); j++) {
+            if (kicks[idx] == secret_word[j]) {
+                exists = 1;
+                break;
+            }
+        }
+            if (!exists) {
+                errors++;
+            }
+    }
+    return errors >= 5;
 }
 
 int main() {
-
-    int won = 0;
-    int hanged = 0;
 
     select_word();
     opening();
@@ -68,5 +95,5 @@ int main() {
         draw_hang_design();
         tryfin_word();
 
-    } while (!won && !hanged);
+    } while (!won() && !get_hanged());
 }
