@@ -1,23 +1,30 @@
 #include <stdio.h>
 #include <string.h>
 
+#define ATT_NUM 20
+
+// global variables
+char secret_word[ATT_NUM];
+char kicks[26];
+int attempts = 0;
+
 void opening() {
     printf("*********************\n");
     printf("*   Jogo de Forca   *\n");
     printf("*********************\n\n");
 }
 
-void tryfin_word(char kicks[26], int* attempts) {
+void tryfin_word() {
     
     char attempt;
     printf("Qual a letra ?\n");
     scanf(" %c", &attempt);
 
-    kicks[(*attempts)] = attempt;
-    (*attempts)++;
+    kicks[attempts] = attempt;
+    attempts++;
 }
 
-int return_found(char letter, char kicks[26], int attempts) {
+int return_found(char letter) {
     int found = 0;
     
     for (int jidx = 0; jidx < attempts; jidx++) {
@@ -30,42 +37,36 @@ int return_found(char letter, char kicks[26], int attempts) {
     return found;
 }
 
-int main() {
+void draw_hang_design() {
+    for (int idx = 0; idx < strlen(secret_word); idx++) {
+        
+        int found = return_found(secret_word[idx]);
 
-    int attempt_number;
+        if (found) {
+            printf("%c ", secret_word[idx]);
+        } else {
+            printf("_ ");
+        }
+    }
+    printf("\n");
+}
 
-    printf("Insert the number of attempts\n");
-    scanf("%d", &attempt_number);
-    printf("----------------------\n");
-
-    char secret_word[attempt_number];
+void select_word() {
     sprintf(secret_word, "MELANCIA");
+}
+
+int main() {
 
     int won = 0;
     int hanged = 0;
 
-    char kicks[26];
-    int attempts = 0;
-
+    select_word();
     opening();
 
     do {
 
-        for (int idx = 0; idx < strlen(secret_word); idx++) {
-            
-            int found = return_found(secret_word[idx], kicks, attempts);
-
-            if (found) {
-                printf("%c ", secret_word[idx]);
-            } else {
-                printf("_ ");
-            }
-        }
-
-        printf("\n");
-
-        tryfin_word(kicks, &attempts);
-
+        draw_hang_design();
+        tryfin_word();
 
     } while (!won && !hanged);
 }
