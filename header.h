@@ -1,5 +1,7 @@
 // declaring all functions for executing the hangman's game
 
+#define WORD_LENGTH 20
+
 void opening();
 void tryfin_word();
 int return_found(char letter);

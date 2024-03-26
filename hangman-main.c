@@ -4,12 +4,9 @@
 #include <stdlib.h>
 #include "header.h"
 
-#define ATT_NUM 20
-#define PICKED_SW "MELANCIA"
-
 // global variables
-char secret_word[ATT_NUM];
-char kicks[ATT_NUM];
+char secret_word[WORD_LENGTH];
+char kicks[26];
 int attempts = 0;
 
 void opening() {
@@ -63,7 +60,7 @@ void add_word() {
 
     if (want == 'S') {
 
-        char new_word[20];
+        char new_word[WORD_LENGTH];
         printf("Which is the new word ?\n");
         scanf("%s", new_word);
 
@@ -155,4 +152,10 @@ int main() {
     } while (!won() && !get_hanged());
 
     add_word();
+
+    if (won()) {
+        printf("Congrats you won the hangman's game\n");
+    } else {
+        printf("Sorry, you loose, more luck for you next time\n");
+    }
 }
