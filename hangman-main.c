@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
+#include <stdlib.h>
+#include "header.h"
 
 #define ATT_NUM 20
 #define PICKED_SW "MELANCIA"
@@ -53,7 +56,27 @@ void draw_hang_design() {
 }
 
 void select_word() {
-    sprintf(secret_word, PICKED_SW);
+    FILE* file;
+
+    file = fopen("data_base.txt", "r");
+
+    if (file == 0) {
+        printf("data base not disponible");
+        exit(1);
+    }
+
+    int word_number;
+    fscanf(file, "%d", &word_number);
+    srand(time(0));
+    int random_number = rand() % word_number;
+
+    for (int idx = 0; idx <= random_number; idx++) {
+        fscanf(file, "%s", secret_word);
+    }
+
+    fclose(file);
+
+
 }
 
 int won() {
