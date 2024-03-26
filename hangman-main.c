@@ -55,13 +55,47 @@ void draw_hang_design() {
     printf("\n");
 }
 
+void add_word() {
+    
+    char want;
+    printf("Do you want to add a new word on the database? (S/N)");
+    scanf(" %c", &want);
+
+    if (want == 'S') {
+
+        char new_word[20];
+        printf("Which is the new word ?\n");
+        scanf("%s", new_word);
+
+        FILE* file;
+        file = fopen("data_base.txt", "r+");
+
+        if (file == 0) {
+            printf("database not available");
+            exit(1);    
+        }
+
+        int qtt;
+        fscanf(file, "%d", &qtt);
+        qtt++;
+
+        fseek(file, 0, SEEK_SET);
+        fprintf(file, "%d", qtt);
+
+        fseek(file, 0, SEEK_END);
+        fprintf(file, "\n%s", new_word);
+
+        fclose(file);
+    }
+}
+
 void select_word() {
     FILE* file;
 
     file = fopen("data_base.txt", "r");
 
     if (file == 0) {
-        printf("data base not disponible");
+        printf("database not available");
         exit(1);
     }
 
@@ -119,4 +153,6 @@ int main() {
         tryfin_word();
 
     } while (!won() && !get_hanged());
+
+    add_word();
 }
