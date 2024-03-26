@@ -1,6 +1,22 @@
 #include <stdio.h>
 #include <string.h>
 
+void opening() {
+    printf("*********************\n");
+    printf("*   Jogo de Forca   *\n");
+    printf("*********************\n\n");
+}
+
+void tryfin_word(char kicks[26], int* attempts) {
+    
+    char attempt;
+    printf("Qual a letra ?\n");
+    scanf(" %c", &attempt);
+
+    kicks[(*attempts)] = attempt;
+    (*attempts)++;
+}
+
 int main() {
 
     int attempt_number;
@@ -17,6 +33,8 @@ int main() {
 
     char kicks[26];
     int attempts = 0;
+
+    opening();
 
     do {
 
@@ -40,12 +58,8 @@ int main() {
 
         printf("\n");
 
-        char attempt;
-        printf("Qual a letra ?\n");
-        scanf(" %c", &attempt);
+        tryfin_word(kicks, &attempts);
 
-        kicks[attempts] = attempt;
-        attempts++;
 
     } while (!won && !hanged);
 }
