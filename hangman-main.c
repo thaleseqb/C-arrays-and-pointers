@@ -17,6 +17,19 @@ void tryfin_word(char kicks[26], int* attempts) {
     (*attempts)++;
 }
 
+int return_found(char letter, char kicks[26], int attempts) {
+    int found = 0;
+    
+    for (int jidx = 0; jidx < attempts; jidx++) {
+        if (kicks[jidx] == letter) {
+            found = 1;
+            break;
+        }
+    }
+
+    return found;
+}
+
 int main() {
 
     int attempt_number;
@@ -39,21 +52,14 @@ int main() {
     do {
 
         for (int idx = 0; idx < strlen(secret_word); idx++) {
-
-            int found = 0;
             
-            for (int jidx = 0; jidx < attempts; jidx++) {
-                if (kicks[jidx] == secret_word[idx]) {
-                    found = 1;
-                    break;
-                }
-            }
+            int found = return_found(secret_word[idx], kicks, attempts);
 
-                if (found) {
-                    printf("%c ", secret_word[idx]);
-                } else {
-                    printf("_ ");
-                }
+            if (found) {
+                printf("%c ", secret_word[idx]);
+            } else {
+                printf("_ ");
+            }
         }
 
         printf("\n");
